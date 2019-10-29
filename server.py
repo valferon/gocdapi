@@ -57,7 +57,7 @@ class GoApiServer(object):
     def get_pipelines(self):
         pipelines = []
         endpoint = "config/pipeline_groups"
-        response = self.go_request(endpoint, api_version=None)
+        response = self.go_request(endpoint=endpoint, api_version=None)
         for group in response.json():
             for data in group['pipelines']:
                 pipelines.append(data['name'])
@@ -66,7 +66,7 @@ class GoApiServer(object):
     def get_pipeline_group(self, pgroup):
         pipelines = []
         endpoint = "config/pipeline_groups"
-        response = self.go_request(endpoint, api_version=None)
+        response = self.go_request(endpoint=endpoint, api_version=None)
         for group in response.json():
             if group['name'] == pgroup:
                 for data in group['pipelines']:
@@ -83,7 +83,7 @@ class GoApiServer(object):
 
     def schedule_pipeline(self, pipeline_name):
         extra_headers = {'X-GoCD-Confirm': 'true', 'Content-Type': 'application/json'}
-        response = self.go_request("pipelines/{}/schedule".format(pipeline_name),
+        response = self.go_request(endpoint="pipelines/{}/schedule".format(pipeline_name),
                                    method="POST",
                                    api_version=self.app_versions['v1'],
                                    extra_header=extra_headers)
@@ -95,9 +95,9 @@ def main():
 
     # pipelines = go.get_pipelines()
 
-    pipeline_group = go.run_pipeline_group("SWAGGER_STAGING", dry_mode=False)
+    # pipeline_group = go.run_pipeline_group("<PIPELINE GROUP>", dry_mode=False)
 
-    pprint.pprint(pipeline_group)
+    # pprint.pprint(pipeline_group)
 
 
 if __name__ == '__main__':
